@@ -1,0 +1,84 @@
+.form{
+     background-image: linear-gradient(110deg, white 0%, white 50%, transparent 50% ), url('/public/assets/images/form2.jpg');
+     background-position: center;
+     background-size: cover;
+     background-repeat: no-repeat;
+     width: 100%;
+     height: 30rem;
+     border-radius: 12px;
+     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+     padding: 40px !important;
+}
+
+
+.FormGroup{
+     width: 40%;
+   }
+
+.FormGroup{
+     margin-top: 40px;
+     position: relative;
+     border: none;
+     width: 40%;
+     padding: 0;
+}
+
+.FormGroup .formLabel,
+.FormGroup input{
+display: block;
+}
+
+.FormGroup .formLabel{
+     position: absolute;
+     top: -18px;
+     left: 0;
+     font-size: 13px;
+     font-weight: bold;
+     color: gray;
+}
+
+.FormGroup:focus{
+     box-shadow: none !important;
+}
+
+.FormGroup input{
+     padding: 15px;
+     outline: none;
+     border-radius: 8px;
+     border: 0;
+     background-color: white;
+     width: 100%;
+     border-bottom: 3px solid transparent;
+     font-family: "Poppins", serif;
+     box-shadow: 0 0 10px rgb(218, 218, 218) inset;
+}
+
+.FormGroup:focus{
+     background-color: white;
+}
+
+.FormGroup input:focus:valid{
+border-bottom: 3px solid green;
+}
+
+.FormGroup input:focus:not(:valid){
+     border-bottom: 3px solid orangered; 
+}
+
+.FormGroup input:placeholder-shown + .formLabel{
+     opacity: 0 !important;
+     visibility: hidden !important;
+     top: -20px;
+     left: 20px;
+}
+
+
+.FormGroup .formLabel{
+     position: absolute;
+     top: -25px;
+     left: 0px;
+     transition: 0.3s;
+     color: gray;
+}
+
+

@@ -1,0 +1,29 @@
+.google-icon-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.google-icon-wrapper span{
+
+    color: rgb(255, 255, 255) !important;
+    
+}
+
+.google-icon-wrapper svg{
+
+    background-color: white !important;
+    border-radius: 8px;
+}
+.google-btn a{
+    text-decoration: none !important;
+}
+
+.google-btn{
+    border: solid 1px rgb(61, 138, 197);
+    width: 20%;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #4385f4;
+}

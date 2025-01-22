@@ -1,0 +1,18 @@
+/*Global CSS*/
+
+*{
+    box-sizing: border-box;
+}
+
+#root,
+html{
+    height: 100%;
+}
+
+body{
+    font-family: "Poppins", serif;
+    height: 100%;
+}
+
+
+

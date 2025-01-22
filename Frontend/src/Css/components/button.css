@@ -1,0 +1,28 @@
+.btn{
+    background-color: white;
+    outline: none;
+    border: 0;
+    padding: 10px 20px;
+    border-radius: 6px;
+}
+
+.btn-primary{
+    background-color: rgb(255, 255, 255) ;
+    color:  rgb(92, 133, 255);
+    outline: none;
+    border: 2px solid rgb(92, 133, 255);
+    padding: 10px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.btn-third{
+    background-color: rgb(255, 255, 255) !important;
+    color:  rgb(92, 133, 255) !important;
+    outline: none;
+    border: 2px solid rgb(92, 133, 255) !important;
+    padding: 10px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+}
