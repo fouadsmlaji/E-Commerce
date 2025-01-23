@@ -8,6 +8,7 @@ export const links = [
         icon: faUsers,
         linkStyle: "LinkStyle",   // Fixed property name
         iconStyle: "navIcon",
+        role:"1995",
     },
     {
         name: "Create User",
@@ -16,6 +17,7 @@ export const links = [
         icon: faUserPlus,
         linkStyle: "LinkStyle",   // Fixed property name
         iconStyle: "navIcon",
+        role:"1995",
     },
     {
         name: "Editors",
@@ -24,5 +26,6 @@ export const links = [
         icon: faUserPlus,
         linkStyle: "LinkStyle",   // Fixed property name
         iconStyle: "navIcon",
+        role:["1996", "1995"],
     }
 ];

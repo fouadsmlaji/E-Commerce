@@ -37,13 +37,16 @@ export default function SideBar() {
   };
 
   const showLinks = links.map((link, key) => (
-    <NavLink className={link.className} to={link.path} key={link.path} key ={key}>
+    <NavLink
+      className={link.className}
+      to={link.path}
+      key={link.path}
+      key={key}
+    >
       <FontAwesomeIcon icon={link.icon} className={link.iconStyle} />
       <p className={link.linkStyle}>{link.name}</p>
     </NavLink>
   ));
-  
-  
 
   return (
     <>
@@ -58,16 +61,17 @@ export default function SideBar() {
       >
         <span style={LinkStyle}>DASHBOARDS</span>
         <div className="mt-2">
-          {user.role === "1995" ? (
-            <>{showLinks}</>
-          ) : user.role === "1996" ? (
-            <NavLink to={"editor"} className="navLink ">
-              <FontAwesomeIcon icon={faUserPlus} className="navIcon" />
-              <p style={LinkStyle}>Editors</p>
+          {links.map((link, key) => link.role.includes(user.role) && (
+            <NavLink
+              className={link.className}
+              to={link.path}
+              key={link.path}
+              key={key}
+            >
+              <FontAwesomeIcon icon={link.icon} className={link.iconStyle} />
+              <p className={link.linkStyle}>{link.name}</p>
             </NavLink>
-          ) : (
-            ""
-          )}
+          ))}
         </div>
       </div>
     </>
