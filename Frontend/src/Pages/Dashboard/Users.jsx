@@ -33,7 +33,7 @@
         <td>{key + 1} </td> 
         <td>{user.name === currentUser.name ? user.name + " (Current User)" : user.name}</td>
         <td>{user.email}</td>
-        <td>{user.role === '1995' ? 'Admin' : user.role ==='200 1' ? 'User' : 'Editor'}</td>
+        <td>{user.role === '1995' ? 'Admin' : user.role ==='2001' ? 'User' : 'Editor'}</td>
         <td>
           <div className="d-flex align-items-center gap-2 justify-content-center">
             <Link to={`${user.id}`}>
