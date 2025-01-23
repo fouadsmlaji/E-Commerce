@@ -74,7 +74,7 @@
       <div className="d-flex flex-column w-100 p-4">
         <div className="d-flex align-items-center justify-content-between mb-2">
           <h1 style={{fontWeight:"200"}}>Users Table</h1>
-          <Link className="btn btn-third" to='/dashboard/users/create'>Create User</Link>
+          <Link className="btn btn-third" to='/dashboard/create'>Create User</Link>
         </div>
         <Table striped bordered hover className="text-center">
           <thead>
