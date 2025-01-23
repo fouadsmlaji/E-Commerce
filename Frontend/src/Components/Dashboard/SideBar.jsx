@@ -36,8 +36,8 @@ export default function SideBar() {
     display: isOpen ? "block" : "none",
   };
 
-  const showLinks = links.map((link) => (
-    <NavLink className={link.className} to={link.path} key={link.path}>
+  const showLinks = links.map((link, key) => (
+    <NavLink className={link.className} to={link.path} key={link.path} key ={key}>
       <FontAwesomeIcon icon={link.icon} className={link.iconStyle} />
       <p className={link.linkStyle}>{link.name}</p>
     </NavLink>
