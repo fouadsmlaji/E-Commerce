@@ -4,6 +4,7 @@
     align-items: top;
     justify-content: space-between;
     padding: 0 100px;
+    height: 100%;
   }
 
   .message{
@@ -32,8 +33,6 @@
     font-size: 90px;
     color: #e05b5b;
     letter-spacing: 3px;
-    text-shadow: 0 0 5px #e05b5b;
-    animation: flux 2s linear infinite;
     
   }
   .trash{
