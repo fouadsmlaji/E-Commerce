@@ -27,6 +27,7 @@ function App() {
 
       {/*Protected Routes*/}
 
+      <Route  element ={<RequiredAuth allowedRole={["1995", "1996"]}/>} >
         <Route path='/dashboard' element = {<Dashboard/>}>
           <Route  element ={<RequiredAuth allowedRole={["1995"]}/>} >
             <Route path='users' element = {<Users/>}></Route>
@@ -36,6 +37,7 @@ function App() {
           <Route  element ={<RequiredAuth allowedRole={["1996", "1995"]}/>} >
             <Route path='editor' element={<Editor/>}></Route>
           </Route>
+        </Route>
         </Route>
      
     </Routes> 
