@@ -39,9 +39,11 @@ export default function Loading() {
       const res = await axios.post(`${baseURL}/${LOGIN}`, form);
       setloading(false);
       const token = res.data.token;
-      cookie.set("Ecookie", token);
+      const role = res.data.user.role;
+      const nav = role === '1995'  ? '/dashboard/users' : role ==='1996' ? '/dashboard/editor': '/' 
+      cookie.set("Ecookie", token); 
 
-      window.location.pathname = "/dashboard/users";
+      window.location.pathname = `${nav}`;
       console.log("Successfully Logged in");
     } 
     

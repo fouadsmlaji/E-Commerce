@@ -11,6 +11,8 @@ import { Routes, Route } from 'react-router-dom'
 import UserUpdate from './Pages/Dashboard/UserUpdate'
 import UserCreate from './Pages/Dashboard/UserCreate'
 import Editor from './Pages/Dashboard/Editor'
+import Error404 from './Pages/Website/Auth/404'
+import RequireBack from './Pages/Website/Auth/RrequireBack'
 
 function App() {
   
@@ -20,10 +22,13 @@ function App() {
     <Routes>
 
       {/*Public Routes*/}
-      <Route path='/' element={<HomePage/>}></Route>
-      <Route path='/signup' element={<Signup/>}></Route>
-      <Route path='/login' element={<Login/>}></Route>
+      <Route path='/' element={<HomePage/>}></Route> 
+      <Route element ={<RequireBack/>}>
+        <Route path='/signup' element={<Signup/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+      </Route>
       <Route path='/auth/google/callback' element= {<GoogleCallBack/>}></Route>
+      <Route path='/*' element= {<Error404/>}></Route>  
 
       {/*Protected Routes*/}
 

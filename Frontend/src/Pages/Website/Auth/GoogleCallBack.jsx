@@ -20,7 +20,7 @@ export default function GoogleCallBack() {
             } catch (err) {
                 console.log(err)
             }
-        }
+        }   
         GoogleCall(); 
     },[])
 

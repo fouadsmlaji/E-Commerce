@@ -3,6 +3,8 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Axios } from "../../Api/Axios";
 import { USER } from "../../Api/Api";
+import { useNavigate } from "react-router-dom";
+import LoadingScreen from "../../Components/Loading/LoadingScreen";
 
 
 export default function UserUpdate() {
@@ -15,20 +17,28 @@ export default function UserUpdate() {
 
   const [disable, setDisable] = useState(true);
 
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
   //Get user id
   const id = Number(window.location.pathname.replace("/dashboard/users/", ""));
 
   //Get User Info
   useEffect(() => {
+
+    setLoading(true); 
     Axios.get(`/${USER}/${id}`)
       .then((data) => {
+        
         setForm({
           name: data.data.name,
           email: data.data.email,
           role: data.data.role,
         });
+        setLoading(false); 
       })
-      .then(() => setDisable(false)); //wait until the data loads
+      .then(() => setDisable(false)).catch(() => navigate('/dashboard/users/page/404', {replace: true})) //wait until the data loads
   }, []);
 
   // Handle Submit
@@ -49,6 +59,7 @@ export default function UserUpdate() {
 
   return (
     <>
+    <LoadingScreen/>
       <Form className="bg-white w-100 mx-2 p-4" onSubmit={handleSubmit}>
         <h1 className="mb-4" style={{fontWeight:"200  "}}>Update User</h1>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
