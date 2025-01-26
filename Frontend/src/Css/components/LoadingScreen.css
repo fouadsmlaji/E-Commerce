@@ -6,6 +6,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(168, 174, 179, 0.266);
+    position: absolute;
 }
 
 .spinner{

@@ -5,6 +5,7 @@ import { Axios } from "../../Api/Axios";
 import { USER } from "../../Api/Api";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../../Components/Loading/LoadingScreen";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 export default function UserUpdate() {
@@ -59,7 +60,7 @@ export default function UserUpdate() {
 
   return (
     <>
-    <LoadingScreen/>
+    {loading && <LoadingScreen/>}
       <Form className="bg-white w-100 mx-2 p-4" onSubmit={handleSubmit}>
         <h1 className="mb-4" style={{fontWeight:"200  "}}>Update User</h1>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -84,6 +85,7 @@ export default function UserUpdate() {
             required
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
           <Form.Label>Role</Form.Label>
           <Form.Select value={form.role} onChange={handleFormChange} name="role">
@@ -91,6 +93,7 @@ export default function UserUpdate() {
           <option value="1995">Admin</option>
           <option value="2001">User</option>
           <option value="1996">Editor</option>
+          <option value="1999">Product Manager</option>
         </Form.Select>
         </Form.Group>
         

@@ -12,7 +12,8 @@ import UserUpdate from './Pages/Dashboard/UserUpdate'
 import UserCreate from './Pages/Dashboard/UserCreate'
 import Editor from './Pages/Dashboard/Editor'
 import Error404 from './Pages/Website/Auth/404'
-import RequireBack from './Pages/Website/Auth/RrequireBack'
+import RequireBack from './Pages/Website/Auth/RequireBack'
+import Categories from './Pages/Dashboard/Categories'
 
 function App() {
   
@@ -32,12 +33,15 @@ function App() {
 
       {/*Protected Routes*/}
 
-      <Route  element ={<RequiredAuth allowedRole={["1995", "1996"]}/>} >
+      <Route  element ={<RequiredAuth allowedRole={["1995", "1996","1999"]}/>} >
         <Route path='/dashboard' element = {<Dashboard/>}>
           <Route  element ={<RequiredAuth allowedRole={["1995"]}/>} >
             <Route path='users' element = {<Users/>}></Route>
             <Route path='users/:id' element = {<UserUpdate/>}></Route>
             <Route path='create' element = {<UserCreate/>}></Route>
+          </Route>
+          <Route  element ={<RequiredAuth allowedRole={["1999", "1995"]}/>} >
+            <Route path='products' element={<Categories/>}></Route>
           </Route>
           <Route  element ={<RequiredAuth allowedRole={["1996", "1995"]}/>} >
             <Route path='editor' element={<Editor/>}></Route>

@@ -1,4 +1,4 @@
-import { faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus, faUsers, faCartShopping  } from "@fortawesome/free-solid-svg-icons";
 
 export const links = [
     {
@@ -6,7 +6,7 @@ export const links = [
         className: "navLink",
         path: "users",
         icon: faUsers,
-        linkStyle: "LinkStyle",   // Fixed property name
+        linkStyle: "LinkStyle",  
         iconStyle: "navIcon",
         role:"1995",
     },
@@ -15,17 +15,28 @@ export const links = [
         className: "navLink",
         path: "create",
         icon: faUserPlus,
-        linkStyle: "LinkStyle",   // Fixed property name
+        linkStyle: "LinkStyle",   
         iconStyle: "navIcon",
         role:"1995",
+    },
+    {
+        name: "Products",
+        className: "navLink",
+        path: "products",
+        icon: faCartShopping ,
+        linkStyle: "LinkStyle",  
+        iconStyle: "navIcon",
+        role:["1999", "1995"],
     },
     {
         name: "Editors",
         className: "navLink",
         path: "editor",
         icon: faUserPlus,
-        linkStyle: "LinkStyle",   // Fixed property name
+        linkStyle: "LinkStyle",  
         iconStyle: "navIcon",
         role:["1996", "1995"],
-    }
+    },
+    
+
 ];

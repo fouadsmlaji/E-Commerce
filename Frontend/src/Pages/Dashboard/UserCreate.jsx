@@ -81,6 +81,7 @@ export default function UserCreate() {
             <option value="1995">Admin</option>
             <option value="2001">User</option>
             <option value="1996">Editor</option>
+            <option value="1999">Product Manager</option>
           </Form.Select>
         </Form.Group>
 
