@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 
 export default function TableComponent(props) {
 
-  const currentUser = props.currentUser || false;
+  const currentUser = props.currentUser || {
+    name : ''
+  };
 
   //Header Show
   const headerShow = props.header.map((item) => <th>{item.name}</th>);
@@ -20,12 +22,18 @@ export default function TableComponent(props) {
     "1996": "Editor",
     "1999": "Product Manager",
   };
+
   const dataShow = props.data.map((item, index) => (
     <tr key={index}>
       <td>{index + 1}</td>
       {props.header.map((header, idx) => (
         <td key={idx}>
-          {header.key === "role" ? roleMapping[item[header.key]] : item[header.key]}
+          {header.key === "role" 
+            ? roleMapping[item[header.key]] 
+            : header.key === "image" 
+            ? <img width={100} src={item[header.key]} alt="item" /> 
+            : item[header.key]
+          }
           {currentUser && item[header.key] === currentUser.name && "(You)"}
         </td>
       ))}
@@ -45,6 +53,7 @@ export default function TableComponent(props) {
       </td>
     </tr>
   ));
+  
 
 
   return (

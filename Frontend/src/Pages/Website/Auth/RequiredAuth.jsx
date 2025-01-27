@@ -5,31 +5,45 @@ import { USER } from "../../../Api/Api";
 import Loading from "./Login";
 import { Axios } from "../../../Api/Axios";
 import Error403 from "./403";
+import LoadingScreen from "../../../Components/Loading/LoadingScreen";
 
 export default function RequiredAuth({ allowedRole }) {
-  //Get user
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    Axios.get(`/${USER}`)
-      .then((data) => setUser(data.data))
-      .catch(() => navigate("/login", { replace: true }));
-  }, []);
-
-  //Get Token
+  // Get Token
   const cookie = Cookie();
   const token = cookie.get("Ecookie");
 
-  return token ? (
-    user === "" ? (
-      <Loading />
-    ) : allowedRole.includes(user.role) ? (
-      <Outlet />
-    ) : (
-      <Error403 role ={user.role}/>
-    )
-  ) : (
-    <Navigate to={"/login"} replace={true} />
-  );
+  useEffect(() => {
+    if (!token) {
+      navigate("/login", { replace: true });
+      return;
+    }
+
+    Axios.get(`/${USER}`)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch(() => {
+        cookie.remove("Ecookie");  // Clear invalid token
+        navigate("/login", { replace: true });
+      })
+      .finally(() => setLoading(false));
+  }, [token, navigate]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user && allowedRole.includes(user.role)) {
+    return <Outlet />;
+  }
+
+  return <Error403 role={user?.role} />;
 }

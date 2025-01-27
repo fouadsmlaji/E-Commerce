@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\socialAuthController;
 use App\Http\Controllers\UsersContoller;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,7 +42,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/user/add', 'addUser');
         Route::delete('/user/{id}', 'destroy');
     });
-    Route::middleware('CheckProductManager')->controller(CategoryController::class)->group(function () {
+    Route::middleware('checkProductManager')->controller(CategoryController::class)->group(function () {
         Route::get('/categories', 'index');
         Route::get('/category/{id}', 'show');
         Route::post('/category/edit/{id}', 'edit');
