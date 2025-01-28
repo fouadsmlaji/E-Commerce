@@ -3,7 +3,7 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Axios } from "../../Api/Axios";
 import { CATEGORY, USER } from "../../Api/Api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingScreen from "../../Components/Loading/LoadingScreen";
 import { FormControl, FormGroup } from "react-bootstrap";
 
@@ -20,7 +20,7 @@ export default function UpdateCategory() {
   const navigate = useNavigate();
 
   //Get user id
-  const id = Number(window.location.pathname.replace("/dashboard/categories/", ""));
+  const { id } = useParams();
 
   //Get User Info
   useEffect(() => {

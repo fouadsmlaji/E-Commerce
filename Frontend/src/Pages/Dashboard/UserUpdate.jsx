@@ -3,7 +3,7 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Axios } from "../../Api/Axios";
 import { USER } from "../../Api/Api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingScreen from "../../Components/Loading/LoadingScreen";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -23,7 +23,7 @@ export default function UserUpdate() {
   const navigate = useNavigate();
 
   //Get user id
-  const id = Number(window.location.pathname.replace("/dashboard/users/", ""));
+  const { id } = useParams();
 
   //Get User Info
   useEffect(() => {
