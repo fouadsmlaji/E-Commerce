@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { baseURL, LOGIN } from "../../../Api/Api.js";
 import LoadingScreen from "../../../Components/Loading/LoadingScreen.jsx";
 import Cookie from "cookie-universal";
@@ -12,6 +12,9 @@ export default function Loading() {
     email: "",
     password: "",
   });
+
+  //Ref Focus
+  const focus = useRef("");
 
   //Loading
   const [loading, setloading] = useState(false);
@@ -27,7 +30,10 @@ export default function Loading() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-
+  //handle Focus
+  useEffect (() => {
+    focus.current.focus();
+  }, [])
   
 
   // handle submit function
@@ -69,6 +75,7 @@ export default function Loading() {
 
             <Form.Group className="mb-3 FormGroup" controlId="exampleForm.ControlInput1">
               <FormControl
+                ref ={focus}
                 value={form.email}
                 onChange={handleFormChange}
                 type="email"

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { baseURL, REGISTER } from "../../../Api/Api.js";
 import LoadingScreen from '../../../Components/Loading/LoadingScreen.jsx'
 import Cookie from "cookie-universal";
@@ -17,6 +17,9 @@ export default function Signup() {
     
     const navigate = useNavigate();
     
+    //useRef focus
+      const focus = useRef("");
+
     //Loading
     const [loading, setloading] = useState(false);
 
@@ -75,6 +78,7 @@ export default function Signup() {
 
             <Form.Group className="mb-3 FormGroup" controlId="exampleForm.ControlInput1" style={FormGroupStyle}>
               <FormControl
+                ref ={focus}
                 value={form.name}
                 onChange={handleFormChange}
                 type="text"
