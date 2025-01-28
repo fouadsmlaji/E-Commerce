@@ -46,7 +46,7 @@ export default function Loading() {
       setloading(false);
       const token = res.data.token;
       const role = res.data.user.role;
-      const nav = role === '1995'  ? '/dashboard/users' : role ==='1996' ? '/dashboard/editor': '/' 
+      const nav = role === '1995'  ? '/dashboard/users' : role ==='1996' ? '/dashboard/ editor':  role ==='1999' ? '/dashboard/categories' : '/'
       cookie.set("Ecookie", token); 
 
       window.location.pathname = `${nav}`;

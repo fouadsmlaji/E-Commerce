@@ -4,7 +4,7 @@ import { baseURL, REGISTER } from "../../../Api/Api.js";
 import LoadingScreen from '../../../Components/Loading/LoadingScreen.jsx'
 import Cookie from "cookie-universal";
 import { Form, FormControl } from "react-bootstrap";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
 
