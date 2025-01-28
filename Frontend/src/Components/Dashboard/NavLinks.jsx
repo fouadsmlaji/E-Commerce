@@ -22,7 +22,7 @@ export const links = [
     {
         name: "Categories",
         className: "navLink",
-        path: "Categories",
+        path: "categories",
         icon: faList ,
         linkStyle: "LinkStyle",  
         iconStyle: "navIcon",

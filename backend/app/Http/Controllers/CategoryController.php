@@ -75,6 +75,7 @@ class CategoryController extends Controller
             $path = 'images';
             $file->move($path, $filename);
         }
+        $category->save();
     }
 
     /**

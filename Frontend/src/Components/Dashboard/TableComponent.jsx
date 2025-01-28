@@ -31,7 +31,7 @@ export default function TableComponent(props) {
           {header.key === "role" 
             ? roleMapping[item[header.key]] 
             : header.key === "image" 
-            ? <img width={100} src={item[header.key]} alt="item" /> 
+            ? <img width={200} src={item[header.key]} alt="item" /> 
             : item[header.key]
           }
           {currentUser && item[header.key] === currentUser.name && "(You)"}
