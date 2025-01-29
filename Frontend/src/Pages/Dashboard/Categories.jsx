@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import {  CATEGORIES, CATEGORY } from "../../Api/Api";
 import { Axios } from "../../Api/Axios";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Table } from "react-bootstrap";
 import TableComponent from "../../Components/Dashboard/TableComponent";
 
 export default function Categories() {
