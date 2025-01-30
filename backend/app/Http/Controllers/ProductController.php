@@ -48,23 +48,7 @@ class ProductController extends Controller
             'About' => $request->About,
             'discount' => $request->discount,
         ]);
-        $productCreated->status = 'published';
-        $productCreated->save();
-        if ($request->hasFile('images')) {
-            $productId = $productCreated->id;
-            $files = $request->file("images");
-            $i = 0;
-            foreach ($files as $file) {
-                $i = $i + 1;
-                $image = new ProductImage();
-                $image->product_id = $productId;
-                $filename = date('YmdHis') . $i . '.' . $file->getClientOriginalExtension();
-                $path = 'images';
-                $file->move($path, $filename);
-                $image->image = url('/') . '/images/' . $filename;
-                $image->save();
-            }
-        }
+     return $productCreated;
     }
 
     /**

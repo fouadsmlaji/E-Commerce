@@ -13,24 +13,25 @@ export default function CreateProduct() {
     About: "",
   });
 
+  const dummyForm = {
+    category: null,
+    title: "dummy",
+    description: "dummy",
+    price: 222,
+    discount: 0,
+    About: "About",
+  };
   const [images, setImages] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [sent, setSent] = useState(false);
+  const [id, setId] = useState();
 
   // Handle Submit
-  async function handleSubmit(e) {
+  async function handleEdit(e) {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("category", form.category);
-    formData.append("title", form.title);
-    formData.append("description", form.description);
-    formData.append("price", form.price);
-    formData.append("discount", form.discount);
-    formData.append("About", form.About);
-
-    images.forEach((image) => formData.append("images[]", image));
 
     try {
-      await Axios.post(`${PRODUCT}/add`, formData, {
+      await Axios.post(`${PRODUCT}/edit/${id}`, form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       window.location.pathname = "/dashboard/products";
@@ -39,17 +40,42 @@ export default function CreateProduct() {
     }
   }
 
+  // Handle Submit Form
+  async function HandleSubmitForm() {
+    try {
+      const res = await Axios.post(`${PRODUCT}/add`, dummyForm);
+      setId(res.data.id);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   // Handle Form Input Change
   function handleFormChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setSent(true);
+    if (sent !== true) {
+      HandleSubmitForm();
+    }
   }
 
   // Handle Image Change
-  function handleImageChange(e) {
+  async function handleImageChange(e) {
     setImages([...e.target.files]);
- }
+    const ImagesFile = e.target.files;
+    const data = new FormData();
+    for (let i = 0; i < ImagesFile.length; i++) {
+      data.append("image", ImagesFile[i]);
+      data.append("product_id", id);
+      try {
+        const res = Axios.post("/product-img/add", data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
 
- // Get Categories
+  // Get Categories
   useEffect(() => {
     Axios.get(`/${CATEGORIES}`)
       .then((response) => setCategories(response.data))
@@ -58,20 +84,33 @@ export default function CreateProduct() {
 
   // Mapping Categories
   const ShowCategory = categories.map((category, index) => (
-    <option value={category.id} key={index}>{category.title}</option>
-  ))
+    <option value={category.id} key={index}>
+      {category.title}
+    </option>
+  ));
 
-   // Mapping Images
-   const ShowImages = images.map((image, index) => 
-    <div className="d-flex flex-column align-items-center justify-content-center">
-        <img src={URL.createObjectURL(image)} key={index} width={300} />
+  // Mapping Images
+  const ShowImages = images.map((image, index) => (
+    <div key={index}>
+      <div className="d-flex flex-column align-items-center justify-content-center">
+        <img src={URL.createObjectURL(image)} width={300} />
+        <div className="progress">
+          <span percent={50} className="innerProgress"></span>
+        </div>
         <p>{image.name}</p>
-        <p>{(image.size < 999 ? (image.size / 1024).toFixed(2) : image.size / (1024 * 1024)).toFixed(2)} MB  </p>
+        <p>
+          {(image.size < 999
+            ? (image.size / 1024).toFixed(2)
+            : image.size / (1024 * 1024)
+          ).toFixed(2)}{" "}
+          MB{" "}
+        </p>
+      </div>
     </div>
-    )
+  ));
 
   return (
-    <Form className="bg-white w-100 mx-2 p-4" onSubmit={handleSubmit}>
+    <Form className="bg-white w-100 mx-2 p-4" onSubmit={handleEdit}>
       <h1 style={{ fontWeight: "200" }} className="mb-4">
         Create Product
       </h1>
@@ -85,8 +124,10 @@ export default function CreateProduct() {
           onChange={handleFormChange}
           required
         >
-          <option value="" disabled>Select Category</option>
-        {ShowCategory}
+          <option value="" disabled>
+            Select Category
+          </option>
+          {ShowCategory}
         </Form.Select>
       </Form.Group>
 
@@ -100,6 +141,7 @@ export default function CreateProduct() {
           value={form.title}
           onChange={handleFormChange}
           required
+          disabled={!sent}
         />
       </Form.Group>
 
@@ -113,6 +155,7 @@ export default function CreateProduct() {
           value={form.description}
           onChange={handleFormChange}
           required
+          disabled={!sent}
         />
       </Form.Group>
 
@@ -126,6 +169,7 @@ export default function CreateProduct() {
           value={form.price}
           onChange={handleFormChange}
           required
+          disabled={!sent}
         />
       </Form.Group>
 
@@ -139,6 +183,7 @@ export default function CreateProduct() {
           value={form.discount}
           onChange={handleFormChange}
           required
+          disabled={!sent}
         />
       </Form.Group>
 
@@ -152,6 +197,7 @@ export default function CreateProduct() {
           value={form.About}
           onChange={handleFormChange}
           required
+          disabled={!sent}
         />
       </Form.Group>
 
@@ -164,6 +210,7 @@ export default function CreateProduct() {
           type="file"
           onChange={handleImageChange}
           required
+          disabled={!sent}
         />
       </Form.Group>
 
@@ -171,19 +218,12 @@ export default function CreateProduct() {
       <button
         className="btn btn-primary"
         type="submit"
-        disabled={
-          !form.category ||
-          !form.title 
-          
-        }
+        disabled={!form.category || !form.title}
       >
         Create
       </button>
 
-      
-      <div className="d-flex flex-row gap-2 pt-4"> 
-        {ShowImages}
-      </div>
+      <div className="d-flex flex-row gap-2 pt-4">{ShowImages}</div>
     </Form>
   );
 }
