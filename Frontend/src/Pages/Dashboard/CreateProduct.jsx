@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Axios } from "../../Api/Axios";
 import { CATEGORIES, PRODUCT } from "../../Api/Api";
@@ -21,10 +21,14 @@ export default function CreateProduct() {
     discount: 0,
     About: "About",
   };
+
   const [images, setImages] = useState([]);
   const [categories, setCategories] = useState([]);
   const [sent, setSent] = useState(false);
   const [id, setId] = useState();
+
+  // Ref
+  const UploadProgress = useRef([]);
 
   // Handle Submit
   async function handleEdit(e) {
@@ -61,14 +65,23 @@ export default function CreateProduct() {
 
   // Handle Image Change
   async function handleImageChange(e) {
-    setImages([...e.target.files]);
+    setImages((prev) => [...prev, ...e.target.files]);
     const ImagesFile = e.target.files;
     const data = new FormData();
     for (let i = 0; i < ImagesFile.length; i++) {
       data.append("image", ImagesFile[i]);
       data.append("product_id", id);
       try {
-        const res = Axios.post("/product-img/add", data);
+        const res = await Axios.post("/product-img/add", data, {
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            const percent = Math.floor((loaded * 100) / total);
+            if (percent % 10 === 0) {
+              UploadProgress.current[i].style.width = `${percent}%`;
+              UploadProgress.current[i].setAttribute("percent", `${percent}%`);
+            }
+          },
+        });
       } catch (err) {
         console.log(err);
       }
@@ -95,7 +108,11 @@ export default function CreateProduct() {
       <div className="d-flex flex-column align-items-center justify-content-center">
         <img src={URL.createObjectURL(image)} width={300} />
         <div className="progress">
-          <span percent={50} className="innerProgress"></span>
+          <span
+            ref={(e) => (UploadProgress.current[index] = e)}
+            // percent={`${UploadProgress[index]}%`}
+            className="innerProgress"
+          ></span>
         </div>
         <p>{image.name}</p>
         <p>
