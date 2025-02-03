@@ -29,6 +29,7 @@ export default function CreateProduct() {
 
   // Ref
   const UploadProgress = useRef([]);
+  const j = useRef(-1);
 
   // Handle Submit
   async function handleEdit(e) {
@@ -63,34 +64,37 @@ export default function CreateProduct() {
     }
   }
 
-  const j = useRef(-1);
+ // Handle Image Change
+ async function handleImageChange(e) {
+  setImages((prev) => [...prev, ...e.target.files]);
+  const ImagesFile = e.target.files;
 
-  // Handle Image Change
-  async function handleImageChange(e) {
-    setImages((prev) => [...prev, ...e.target.files]);
-    const ImagesFile = e.target.files;
+  for (let i = 0; i < ImagesFile.length; i++) {
+    j.current++;
     const data = new FormData();
-    for (let i = 0; i < ImagesFile.length; i++) {
-      j.current++;
-      data.append("image", ImagesFile[i]);
-      data.append("product_id", id);
-      try {
-        const res = await Axios.post("/product-img/add", data, {
-          onUploadProgress: (progressEvent) => {
-            const { loaded, total } = progressEvent;
-            const percent = Math.floor((loaded * 100) / total);
-            if (percent % 10 === 0) {
-              UploadProgress.current[j.current].style.width = `${percent}%`;
-              UploadProgress.current[j.current].setAttribute("percent", `${percent}%`);
-            }
-          },
-        });
-      } catch (err) {
-        console.log(err);
-      }
+    data.append("image", ImagesFile[i]);
+    data.append("product_id", id);
+
+    try {
+      await Axios.post("/product-img/add", data, {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          const percent = Math.floor((loaded * 100) / total);
+
+          if (percent % 10 === 0 && UploadProgress.current[j.current]) {
+            UploadProgress.current[j.current].style.width = `${percent}%`;
+            UploadProgress.current[j.current].setAttribute(
+              "percent",
+              `${percent}%`
+            );
+          }
+        },
+      });
+    } catch (err) {
+      console.log(err);
     }
   }
-
+}
   // Get Categories
   useEffect(() => {
     Axios.get(`/${CATEGORIES}`)
@@ -119,10 +123,11 @@ export default function CreateProduct() {
         </div>
         <p>{image.name}</p>
         <p>
-          {(image.size / 1024 < 900
-            ? (image.size / 1024).toFixed(2) + "KB"
-            : image.size / (1024 * 1024)
-          ).toFixed(2) + "MB"}
+        {(
+            image.size / 1024 < 900
+              ? (image.size / 1024).toFixed(2) + "KB"
+              : (image.size / (1024 * 1024)).toFixed(2) + "MB"
+          )}
         </p>
       </div>
     </div>
