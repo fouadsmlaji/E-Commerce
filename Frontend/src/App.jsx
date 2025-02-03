@@ -1,23 +1,38 @@
 
 import './App.css'
 import Dashboard from './Pages/Dashboard/Dashboard'
-import Users from './Pages/Dashboard/Users'
-import GoogleCallBack from './Pages/Website/Auth/GoogleCallBack'
-import  Login  from './Pages/Website/Auth/Login'
-import RequiredAuth from './Pages/Website/Auth/RequiredAuth'
-import  Signup  from './Pages/Website/Auth/Signup'
+
+// User Imports
+import Users from './Pages/Dashboard/User/Users'
+import UserUpdate from './Pages/Dashboard/User/UserUpdate'
+import UserCreate from './Pages/Dashboard/User/UserCreate'
+
+// Auth Imports
+import GoogleCallBack from './Pages/Website/Auth/AuthOperations/GoogleCallBack'
+import  Login  from './Pages/Website/Auth/AuthOperations/Login'
+import  Signup  from './Pages/Website/Auth/AuthOperations/Signup'
+import RequiredAuth from './Pages/Website/Auth/AuthProtection/RequiredAuth'
+import RequireBack from './Pages/Website/Auth/AuthProtection/RequireBack'
+
+
+// Errors Imports
+import Error404 from './Pages/Website/Auth/Errors/404'
+
+
+// Category Imports
+import Categories from './Pages/Dashboard/Category/Categories'
+import CreateCategory from './Pages/Dashboard/Category/CreateCategory'
+import UpdateCategory from './Pages/Dashboard/Category/UpdateCategory'
+
+// Product Imports
+import Products from './Pages/Dashboard/Product/Products'
+import CreateProduct from './Pages/Dashboard/Product/CreateProduct'
+
+//
+import Editor from './Pages/Dashboard/Editor'
+
 import  HomePage  from './Pages/Website/HomePage'
 import { Routes, Route } from 'react-router-dom'
-import UserUpdate from './Pages/Dashboard/UserUpdate'
-import UserCreate from './Pages/Dashboard/UserCreate'
-import Editor from './Pages/Dashboard/Editor'
-import Error404 from './Pages/Website/Auth/404'
-import RequireBack from './Pages/Website/Auth/RequireBack'
-import Categories from './Pages/Dashboard/Categories'
-import CreateCategory from './Pages/Dashboard/CreateCategory'
-import UpdateCategory from './Pages/Dashboard/UpdateCategory'
-import Products from './Pages/Dashboard/Products'
-import CreateProduct from './Pages/Dashboard/CreateProduct'
 
 function App() {
   

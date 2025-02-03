@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { Axios } from "../../Api/Axios";
-import { CATEGORY } from "../../Api/Api";
+import { Axios } from "../../../Api/Axios";
+import { CATEGORY } from "../../../Api/Api";
 import { FormControl, FormGroup } from "react-bootstrap";
 
 export default function CreateCategory() {

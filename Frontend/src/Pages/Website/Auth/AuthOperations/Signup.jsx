@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRef, useState } from "react";
-import { baseURL, REGISTER } from "../../../Api/Api.js";
-import LoadingScreen from '../../../Components/Loading/LoadingScreen.jsx'
+import { baseURL, REGISTER } from "../../../../Api/Api.js";
+import LoadingScreen from '../../../../Components/Loading/LoadingScreen.jsx'
 import Cookie from "cookie-universal";
 import { Form, FormControl } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";

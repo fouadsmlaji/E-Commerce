@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { USER, USERS } from "../../Api/Api";
-import TableComponent from "../../Components/Dashboard/TableComponent";
+import { USER, USERS } from "../../../Api/Api";
+import TableComponent from "../../../Components/Dashboard/TableComponent";
 
 import { Link } from "react-router-dom";
-import { Axios } from "../../Api/Axios";
+import { Axios } from "../../../Api/Axios";
 
 export default function Users() {
   const [users, setUsers] = useState([]);

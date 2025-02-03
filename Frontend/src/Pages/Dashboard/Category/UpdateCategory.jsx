@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { Axios } from "../../Api/Axios";
-import { CATEGORY, USER } from "../../Api/Api";
+import { Axios } from "../../../Api/Axios";
+import { CATEGORY, USER } from "../../../Api/Api";
 import { useNavigate, useParams } from "react-router-dom";
-import LoadingScreen from "../../Components/Loading/LoadingScreen";
+import LoadingScreen from "../../../Components/Loading/LoadingScreen";
 import { FormControl, FormGroup } from "react-bootstrap";
 
 

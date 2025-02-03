@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import {  PRODUCT, PRODUCTS } from "../../Api/Api";
-import { Axios } from "../../Api/Axios";
+import {  PRODUCT, PRODUCTS } from "../../../Api/Api";
+import { Axios } from "../../../Api/Axios";
 import { Link } from "react-router-dom";
-import TableComponent from "../../Components/Dashboard/TableComponent";
+import TableComponent from "../../../Components/Dashboard/TableComponent";
 
 export default function Products() {
     const [products, setProducts] = useState([]);

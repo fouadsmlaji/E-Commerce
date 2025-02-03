@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { Axios } from "../../Api/Axios";
-import { CATEGORIES, PRODUCT } from "../../Api/Api";
+import { Axios } from "../../../Api/Axios";
+import { CATEGORIES, PRODUCT } from "../../../Api/Api";
+import { Button } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function CreateProduct() {
   const [form, setForm] = useState({
@@ -30,6 +34,7 @@ export default function CreateProduct() {
   // Ref
   const UploadProgress = useRef([]);
   const j = useRef(-1);
+  const ids = useRef([]);
 
   // Handle Submit
   async function handleEdit(e) {
@@ -76,7 +81,7 @@ export default function CreateProduct() {
     data.append("product_id", id);
 
     try {
-      await Axios.post("/product-img/add", data, {
+      const res = await Axios.post("/product-img/add", data, {
         onUploadProgress: (progressEvent) => {
           const { loaded, total } = progressEvent;
           const percent = Math.floor((loaded * 100) / total);
@@ -90,6 +95,7 @@ export default function CreateProduct() {
           }
         },
       });
+      ids.current[j.current] = res.data.id; 
     } catch (err) {
       console.log(err);
     }
@@ -109,6 +115,19 @@ export default function CreateProduct() {
     </option>
   ));
 
+  // Handle Image Delete
+   async function handleImageDelete(id, img) {
+    const findId = ids.current[id];
+    try {
+      const res = await Axios.delete(`product-img/${findId}`);
+      setImages((prev) => prev.filter((image) => image !== img));
+      ids.current = ids.current.filter(i => i !== findId);
+      --j.current;
+    } catch (error) {
+      console.log(error)
+    }
+   }
+
   // Mapping Images
   const ShowImages = images.map((image, index) => (
     <div key={index}>
@@ -122,13 +141,16 @@ export default function CreateProduct() {
           ></span>
         </div>
         <p>{image.name}</p>
-        <p>
+        <div className="d-flex flex-row gap-3 align-items-center">
+        <p className="m-0">
         {(
             image.size / 1024 < 900
               ? (image.size / 1024).toFixed(2) + "KB"
               : (image.size / (1024 * 1024)).toFixed(2) + "MB"
           )}
         </p>
+          <FontAwesomeIcon icon={faTrashCan} color="red" onClick={() => handleImageDelete(index, image)} cursor="pointer"/>
+        </div>
       </div>
     </div>
   ));

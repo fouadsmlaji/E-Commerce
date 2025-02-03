@@ -2,9 +2,7 @@ import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { USER } from "../../Api/Api";
-import { Axios } from "../../Api/Axios";
-import { useEffect, useState } from "react";
+
 
 export default function TableComponent(props) {
 
