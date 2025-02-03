@@ -63,12 +63,15 @@ export default function CreateProduct() {
     }
   }
 
+  const j = useRef(-1);
+
   // Handle Image Change
   async function handleImageChange(e) {
     setImages((prev) => [...prev, ...e.target.files]);
     const ImagesFile = e.target.files;
     const data = new FormData();
     for (let i = 0; i < ImagesFile.length; i++) {
+      j.current++;
       data.append("image", ImagesFile[i]);
       data.append("product_id", id);
       try {
@@ -77,8 +80,8 @@ export default function CreateProduct() {
             const { loaded, total } = progressEvent;
             const percent = Math.floor((loaded * 100) / total);
             if (percent % 10 === 0) {
-              UploadProgress.current[i].style.width = `${percent}%`;
-              UploadProgress.current[i].setAttribute("percent", `${percent}%`);
+              UploadProgress.current[j.current].style.width = `${percent}%`;
+              UploadProgress.current[j.current].setAttribute("percent", `${percent}%`);
             }
           },
         });
@@ -116,11 +119,10 @@ export default function CreateProduct() {
         </div>
         <p>{image.name}</p>
         <p>
-          {(image.size < 999
-            ? (image.size / 1024).toFixed(2)
+          {(image.size / 1024 < 900
+            ? (image.size / 1024).toFixed(2) + "KB"
             : image.size / (1024 * 1024)
-          ).toFixed(2)}{" "}
-          MB{" "}
+          ).toFixed(2) + "MB"}
         </p>
       </div>
     </div>
