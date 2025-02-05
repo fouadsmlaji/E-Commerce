@@ -21,6 +21,7 @@ export default function TableComponent(props) {
     "1999": "Product Manager",
   };
 
+
   const dataShow = props.data.map((item, index) => (
     <tr key={index}>
       <td>{index + 1}</td>
@@ -28,6 +29,10 @@ export default function TableComponent(props) {
         <td key={idx}>
           {header.key === "role" 
             ? roleMapping[item[header.key]] 
+            : header.key === "images" 
+            ? item[header.key].map((img, imgIdx) => (
+                <img key={imgIdx} width={100} src={img.image} alt={`img-${imgIdx}`} />
+              ))
             : header.key === "image" 
             ? <img width={200} src={item[header.key]} alt="item" /> 
             : item[header.key]

@@ -6,7 +6,6 @@ import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function CreateProduct() {
   const [form, setForm] = useState({
     category: "",
@@ -69,38 +68,38 @@ export default function CreateProduct() {
     }
   }
 
- // Handle Image Change
- async function handleImageChange(e) {
-  setImages((prev) => [...prev, ...e.target.files]);
-  const ImagesFile = e.target.files;
+  // Handle Image Change
+  async function handleImageChange(e) {
+    setImages((prev) => [...prev, ...e.target.files]);
+    const ImagesFile = e.target.files;
 
-  for (let i = 0; i < ImagesFile.length; i++) {
-    j.current++;
-    const data = new FormData();
-    data.append("image", ImagesFile[i]);
-    data.append("product_id", id);
+    for (let i = 0; i < ImagesFile.length; i++) {
+      j.current++;
+      const data = new FormData();
+      data.append("image", ImagesFile[i]);
+      data.append("product_id", id);
 
-    try {
-      const res = await Axios.post("/product-img/add", data, {
-        onUploadProgress: (progressEvent) => {
-          const { loaded, total } = progressEvent;
-          const percent = Math.floor((loaded * 100) / total);
+      try {
+        const res = await Axios.post("/product-img/add", data, {
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            const percent = Math.floor((loaded * 100) / total);
 
-          if (percent % 10 === 0 && UploadProgress.current[j.current]) {
-            UploadProgress.current[j.current].style.width = `${percent}%`;
-            UploadProgress.current[j.current].setAttribute(
-              "percent",
-              `${percent}%`
-            );
-          }
-        },
-      });
-      ids.current[j.current] = res.data.id; 
-    } catch (err) {
-      console.log(err);
+            if (percent % 10 === 0 && UploadProgress.current[j.current]) {
+              UploadProgress.current[j.current].style.width = `${percent}%`;
+              UploadProgress.current[j.current].setAttribute(
+                "percent",
+                `${percent}%`
+              );
+            }
+          },
+        });
+        ids.current[j.current] = res.data.id;
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
-}
   // Get Categories
   useEffect(() => {
     Axios.get(`/${CATEGORIES}`)
@@ -116,17 +115,17 @@ export default function CreateProduct() {
   ));
 
   // Handle Image Delete
-   async function handleImageDelete(id, img) {
+  async function handleImageDelete(id, img) {
     const findId = ids.current[id];
     try {
       const res = await Axios.delete(`product-img/${findId}`);
       setImages((prev) => prev.filter((image) => image !== img));
-      ids.current = ids.current.filter(i => i !== findId);
+      ids.current = ids.current.filter((i) => i !== findId);
       --j.current;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-   }
+  }
 
   // Mapping Images
   const ShowImages = images.map((image, index) => (
@@ -142,14 +141,17 @@ export default function CreateProduct() {
         </div>
         <p>{image.name}</p>
         <div className="d-flex flex-row gap-3 align-items-center">
-        <p className="m-0">
-        {(
-            image.size / 1024 < 900
+          <p className="m-0">
+            {image.size / 1024 < 900
               ? (image.size / 1024).toFixed(2) + "KB"
-              : (image.size / (1024 * 1024)).toFixed(2) + "MB"
-          )}
-        </p>
-          <FontAwesomeIcon icon={faTrashCan} color="red" onClick={() => handleImageDelete(index, image)} cursor="pointer"/>
+              : (image.size / (1024 * 1024)).toFixed(2) + "MB"}
+          </p>
+          <FontAwesomeIcon
+            icon={faTrashCan}
+            color="red"
+            onClick={() => handleImageDelete(index, image)}
+            cursor="pointer"
+          />
         </div>
       </div>
     </div>
