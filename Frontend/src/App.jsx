@@ -1,6 +1,5 @@
-
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import Dashboard from './Pages/Dashboard/Dashboard'
 
 // User Imports
 import Users from './Pages/Dashboard/User/Users'
@@ -14,10 +13,8 @@ import  Signup  from './Pages/Website/Auth/AuthOperations/Signup'
 import RequiredAuth from './Pages/Website/Auth/AuthProtection/RequiredAuth'
 import RequireBack from './Pages/Website/Auth/AuthProtection/RequireBack'
 
-
 // Errors Imports
 import Error404 from './Pages/Website/Auth/Errors/404'
-
 
 // Category Imports
 import Categories from './Pages/Dashboard/Category/Categories'
@@ -27,12 +24,14 @@ import UpdateCategory from './Pages/Dashboard/Category/UpdateCategory'
 // Product Imports
 import Products from './Pages/Dashboard/Product/Products'
 import CreateProduct from './Pages/Dashboard/Product/CreateProduct'
+import UpdateProduct from './Pages/Dashboard/Product/UpdateProducts'
 
-//
+// Editor Imports
 import Editor from './Pages/Dashboard/Editor'
 
 import  HomePage  from './Pages/Website/HomePage'
-import { Routes, Route } from 'react-router-dom'
+import Dashboard from './Pages/Dashboard/Dashboard'
+
 
 function App() {
   
@@ -51,7 +50,6 @@ function App() {
       <Route path='/*' element= {<Error404/>}></Route>  
 
       {/*Protected Routes*/}
-
       <Route  element ={<RequiredAuth allowedRole={["1995", "1996","1999"]}/>} >
         <Route path='/dashboard' element = {<Dashboard/>}>
          {/* Users */}
@@ -68,7 +66,7 @@ function App() {
             <Route path='create_category' element={<CreateCategory/>}></Route>
             {/* Products */}
             <Route path='products' element={<Products/>}></Route>
-            <Route path='products/:id' element={<Products/>}></Route>
+            <Route path='products/:id' element={<UpdateProduct/>}></Route>
             <Route path='create_product' element={<CreateProduct/>}></Route>
           </Route>
           
