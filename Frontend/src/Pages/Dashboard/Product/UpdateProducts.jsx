@@ -27,6 +27,7 @@ export default function UpdateProduct() {
   const j = useRef(-1);
   const ids = useRef([]);
 
+
   // Handle Submit
   async function handleEdit(e) {
     e.preventDefault();
@@ -81,13 +82,12 @@ export default function UpdateProduct() {
     }
   }
 
- // Get Product
- useEffect(() => {
-    Axios.get(`/${PRODUCT}/${id}`)
-    .then((data) => {
-        setForm(data.data[0]);
-        setImagesFromServer(data.data[0].images)
-    })
+  // Get Product
+  useEffect(() => {
+    Axios.get(`/${PRODUCT}/${id}`).then((data) => {
+      setForm(data.data[0]);
+      setImagesFromServer(data.data[0].images);
+    });
   }, []);
 
   // Get Categories
@@ -121,13 +121,12 @@ export default function UpdateProduct() {
   async function handleImageDeleteFromServer(id) {
     setImagesFromServer((prev) => prev.filter((img) => img.id !== id));
     try {
-       await Axios.delete(`/product-img/${id}`);
-
+      await Axios.delete(`/product-img/${id}`);
     } catch (error) {
       console.log(error);
     }
   }
-  
+
   // Mapping Images
   const ShowImages = images.map((image, index) => (
     <div key={index}>
@@ -158,170 +157,188 @@ export default function UpdateProduct() {
     </div>
   ));
 
-    // Mapping Uploaded Images
+  // Mapping Uploaded Images
   const ShowImagesFromServer = imagesFromServer.map((image, index) => (
     <div key={index}>
       <div className="d-flex flex-column align-items-center justify-content-center">
-        <img src={image.image} width={300} />         
-          <FontAwesomeIcon
-            icon={faTrashCan}
-            color="red"
-            onClick={() => handleImageDeleteFromServer(image.id)}
-            cursor="pointer"
-            className="mt-3"
-          />
-        </div>
+        <img src={image.image} width={100} height={100} />
+        <FontAwesomeIcon
+          icon={faTrashCan}
+          color="red"
+          onClick={() => handleImageDeleteFromServer(image.id)}
+          cursor="pointer"
+          className="mt-3"
+        />
       </div>
+    </div>
   ));
 
   return (
-    <Form className="bg-white w-100 mx-2 p-4" onSubmit={handleEdit}>
-      <h1 style={{ fontWeight: "200" }} className="mb-4">
-        Create Product
-      </h1>
+    <div className="d-flex flex-column gap-4 w-100">
+       <Form className="bg-white w-100 mx-2 p-4" onSubmit={handleEdit}>
+        <h1 style={{ fontWeight: "200" }} className="mb-4">
+          Update Product
+        </h1>
 
-      <div className="d-flex flex-row ">
-      <div className="col-6 d-flex flex-column gap-2 p-4">
-  {/* Large Image */}
-  <div
-    className="bg-secondary"
-    style={{
-      height: "70%",
-      backgroundImage: imagesFromServer[0]
-        ? `url(${imagesFromServer[0].image})`
-        : "none",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      borderRadius: "10px",
-    }}
-  ></div>
+   
+            {/* Category Selection */}
+            <Form.Group className="mb-3">
+              <Form.Label>Category</Form.Label>
+              <Form.Select
+                name="category"
+                value={form.category}
+                onChange={handleFormChange}
+                required
+              >
+                <option value="" disabled>
+                  Select Category
+                </option>
+                {ShowCategory}
+              </Form.Select>
+            </Form.Group>
 
-  {/* Small Images */}
-  <div className="row p-2" style={{ height: "30%" }}>
-    {imagesFromServer.slice(1, 4).map((img, index) => (
-      <div
-        key={index}
-        className="col-4 bg-secondary"
-        style={{
-          border: "5px white solid",
-          backgroundImage: `url(${img.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          borderRadius: "5px",
-          height: "100%",
-        }}
-      ></div>
-    ))}
-  </div>
-      </div>
+            {/* Title Input */}
+            <Form.Group className="mb-3">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                name="title"
+                type="text"
+                placeholder="Product Title"
+                value={form.title}
+                onChange={handleFormChange}
+                required
+              />
+            </Form.Group>
 
-      <div className="col-6">
-        {/* Category Selection */}
-      <Form.Group className="mb-3">
-        <Form.Label>Category</Form.Label>
-        <Form.Select
-          name="category"
-          value={form.category}
-          onChange={handleFormChange}
-          required
+            {/* Description Input */}
+            <Form.Group className="mb-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                name="description"
+                type="text"
+                placeholder="Product Description"
+                value={form.description}
+                onChange={handleFormChange}
+                required
+              />
+            </Form.Group>
+
+            {/* Price Input */}
+            <Form.Group className="mb-3">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                name="price"
+                type="number"
+                placeholder="Product Price"
+                value={form.price}
+                onChange={handleFormChange}
+                required
+              />
+            </Form.Group>
+
+            {/* Discount Input */}
+            <Form.Group className="mb-3">
+              <Form.Label>Discount</Form.Label>
+              <Form.Control
+                name="discount"
+                type="number"
+                placeholder="Product Discount"
+                value={form.discount}
+                onChange={handleFormChange}
+                required
+              />
+            </Form.Group>
+
+            {/* About Input */}
+            <Form.Group className="mb-3">
+              <Form.Label>About</Form.Label>
+              <Form.Control
+                name="About"
+                type="text"
+                placeholder="Product About"
+                value={form.About}
+                onChange={handleFormChange}
+                required
+              />
+            </Form.Group>
+
+            {/* File Upload */}
+            <Form.Group className="mb-3">
+              <Form.Label>Images</Form.Label>
+              <Form.Control
+                multiple
+                name="images"
+                type="file"
+                onChange={handleImageChange}
+                
+              />
+            </Form.Group>
+
+
+        {/* Submit Button */}
+        <button
+          className="btn btn-primary"
+          type="submit"
+          disabled={!form.category || !form.title}
         >
-          <option value="" disabled>
-            Select Category
-          </option>
-          {ShowCategory}
-        </Form.Select>
-      </Form.Group>
+          Update Product
+        </button>
 
-      {/* Title Input */}
-      <Form.Group className="mb-3">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          name="title"
-          type="text"
-          placeholder="Product Title"
-          value={form.title}
-          onChange={handleFormChange}
-          required
-        />
-      </Form.Group>
-
-      {/* Description Input */}
-      <Form.Group className="mb-3">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          name="description"
-          type="text"
-          placeholder="Product Description"
-          value={form.description}
-          onChange={handleFormChange}
-          required
-        />
-      </Form.Group>
-
-      {/* Price Input */}
-      <Form.Group className="mb-3">
-        <Form.Label>Price</Form.Label>
-        <Form.Control
-          name="price"
-          type="number"
-          placeholder="Product Price"
-          value={form.price}
-          onChange={handleFormChange}
-          required
-        />
-      </Form.Group>
-
-      {/* Discount Input */}
-      <Form.Group className="mb-3">
-        <Form.Label>Discount</Form.Label>
-        <Form.Control
-          name="discount"
-          type="number"
-          placeholder="Product Discount"
-          value={form.discount}
-          onChange={handleFormChange}
-          required
-        />
-      </Form.Group>
-
-      {/* About Input */}
-      <Form.Group className="mb-3">
-        <Form.Label>About</Form.Label>
-        <Form.Control
-          name="About"
-          type="text"
-          placeholder="Product About"
-          value={form.About}
-          onChange={handleFormChange}
-          required
-        />
-      </Form.Group>
-
-      {/* File Upload */}
-      <Form.Group className="mb-3">
-        <Form.Label>Images</Form.Label>
-        <Form.Control
-          multiple
-          name="images"
-          type="file"
-          onChange={handleImageChange}
-          required
-        />
-      </Form.Group>
-      </div>
-      </div>
-
-      {/* Submit Button */}
-      <button
-        className="btn btn-primary"
-        type="submit"
-        disabled={!form.category || !form.title}
+        <div className="d-flex flex-row gap-2 pt-4">{ShowImagesFromServer}</div>
+        <div className="d-flex flex-row gap-2 pt-4">{ShowImages}</div>
+      </Form>
+      <div
+        className="d-flex flex-row gap-4 pt-4"
+        style={{ height: "90vh", width: "100%" }}
       >
-        Create
-      </button>
+        <div className="col-6 d-flex flex-column gap-2 px-4">
+          {/* Large Image */}
+          <div
+            className="bg-secondary"
+            style={{
+              height: "70%",
+              backgroundImage: imagesFromServer[0]
+                ? `url(${imagesFromServer[0].image})`
+                : "none",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              borderRadius: "10px",
+            }}
+          ></div>
 
-      <div className="d-flex flex-row gap-2 pt-4">{ShowImagesFromServer}</div>
-      <div className="d-flex flex-row gap-2 pt-4">{ShowImages}</div>
-    </Form>
+          {/* Small Images */}
+          <div className="row p-2" style={{ height: "30%" }}>
+            {imagesFromServer.slice(1, 4).map((img, index) => (
+              <div
+                key={index}
+                className="col-4 bg-secondary"
+                style={{
+                  border: "5px white solid",
+                  backgroundImage: `url(${img.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  height: "100%",
+                }}
+              ></div>
+            ))}
+          </div>
+        </div>
+
+        <div className="d-flex flex-column gap-2 col-6">
+          <h2 className="display-5 fw-bolder text-primary">{form.title || "Product Title"}</h2>
+          <p style={{ maxWidth: "500px" }}>
+            {form.description || "Lorem ipsum dolor sit amet, consectetur adipisicing elit."}
+          </p>
+          <div className="d-flex flex-row gap-4 align-items-center">
+            <span className="display-6 fw-bold text-primary">
+              ${form.price ? form.price : "0.00"}
+            </span>
+            {form.discount && <span>{form.discount}% off discount</span>}
+          </div>
+        </div>
+
+      </div>
+     
+    </div>
   );
 }
