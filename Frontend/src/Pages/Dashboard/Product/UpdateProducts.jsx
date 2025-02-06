@@ -20,6 +20,7 @@ export default function UpdateProduct() {
 
   const [images, setImages] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [imagesFromServer, setImagesFromServer] = useState([]);
 
   // Ref
   const UploadProgress = useRef([]);
@@ -85,6 +86,7 @@ export default function UpdateProduct() {
     Axios.get(`/${PRODUCT}/${id}`)
     .then((data) => {
         setForm(data.data[0]);
+        setImagesFromServer(data.data[0].images)
     })
   }, []);
 
@@ -106,7 +108,7 @@ export default function UpdateProduct() {
   async function handleImageDelete(id, img) {
     const findId = ids.current[id];
     try {
-      const res = await Axios.delete(`product-img/${findId}`);
+      const res = await Axios.delete(`/product-img/${findId}`);
       setImages((prev) => prev.filter((image) => image !== img));
       ids.current = ids.current.filter((i) => i !== findId);
       --j.current;
@@ -115,6 +117,17 @@ export default function UpdateProduct() {
     }
   }
 
+  // Delete Previous Images
+  async function handleImageDeleteFromServer(id) {
+    setImagesFromServer((prev) => prev.filter((img) => img.id !== id));
+    try {
+       await Axios.delete(`/product-img/${id}`);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   // Mapping Images
   const ShowImages = images.map((image, index) => (
     <div key={index}>
@@ -143,6 +156,22 @@ export default function UpdateProduct() {
         </div>
       </div>
     </div>
+  ));
+
+    // Mapping Uploaded Images
+  const ShowImagesFromServer = imagesFromServer.map((image, index) => (
+    <div key={index}>
+      <div className="d-flex flex-column align-items-center justify-content-center">
+        <img src={image.image} width={300} />         
+          <FontAwesomeIcon
+            icon={faTrashCan}
+            color="red"
+            onClick={() => handleImageDeleteFromServer(image.id)}
+            cursor="pointer"
+            className="mt-3"
+          />
+        </div>
+      </div>
   ));
 
   return (
@@ -253,6 +282,7 @@ export default function UpdateProduct() {
         Create
       </button>
 
+      <div className="d-flex flex-row gap-2 pt-4">{ShowImagesFromServer}</div>
       <div className="d-flex flex-row gap-2 pt-4">{ShowImages}</div>
     </Form>
   );
