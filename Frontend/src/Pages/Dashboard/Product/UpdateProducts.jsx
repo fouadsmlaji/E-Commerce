@@ -180,7 +180,43 @@ export default function UpdateProduct() {
         Create Product
       </h1>
 
-      {/* Category Selection */}
+      <div className="d-flex flex-row ">
+      <div className="col-6 d-flex flex-column gap-2 p-4">
+  {/* Large Image */}
+  <div
+    className="bg-secondary"
+    style={{
+      height: "70%",
+      backgroundImage: imagesFromServer[0]
+        ? `url(${imagesFromServer[0].image})`
+        : "none",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      borderRadius: "10px",
+    }}
+  ></div>
+
+  {/* Small Images */}
+  <div className="row p-2" style={{ height: "30%" }}>
+    {imagesFromServer.slice(1, 4).map((img, index) => (
+      <div
+        key={index}
+        className="col-4 bg-secondary"
+        style={{
+          border: "5px white solid",
+          backgroundImage: `url(${img.image})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          borderRadius: "5px",
+          height: "100%",
+        }}
+      ></div>
+    ))}
+  </div>
+      </div>
+
+      <div className="col-6">
+        {/* Category Selection */}
       <Form.Group className="mb-3">
         <Form.Label>Category</Form.Label>
         <Form.Select
@@ -272,6 +308,8 @@ export default function UpdateProduct() {
           required
         />
       </Form.Group>
+      </div>
+      </div>
 
       {/* Submit Button */}
       <button
