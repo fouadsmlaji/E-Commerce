@@ -6,6 +6,8 @@ import TableComponent from "../../../Components/Dashboard/TableComponent";
 
 export default function Products() {
     const [products, setProducts] = useState([]);
+    const [limit, setLimit] = useState(8);
+    const [page, setPage] = useState(1);
 
     const header = [
         {
@@ -56,7 +58,7 @@ export default function Products() {
           <Link className="btn btn-third" to='/dashboard/create_category'>Create Product</Link>
         </div>
        
-       <TableComponent header={header} data={products} delete={handleDelete}/>
+       <TableComponent header={header} data={products} delete={handleDelete} limit={limit} page={setPage}/>
       </div>
     );
   }

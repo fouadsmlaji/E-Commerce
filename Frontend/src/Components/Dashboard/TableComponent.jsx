@@ -5,7 +5,15 @@ import { Link } from "react-router-dom";
 
 
 export default function TableComponent(props) {
+  
+  let paginateData = [];
 
+  if(props.data.length !== 0){
+    for (let i = (props.page - 1); i <props.page * props.limit; i++) {
+      paginateData.push(props.data[i]);
+    }
+  }
+ 
   const currentUser = props.currentUser || {
     name : ''
   };
@@ -22,7 +30,7 @@ export default function TableComponent(props) {
   };
 
 
-  const dataShow = props.data.map((item, index) => (
+  const dataShow = paginateData.map((item, index) => (
     <tr key={index}>
       <td>{index + 1}</td>
       {props.header.map((header, idx) => (
